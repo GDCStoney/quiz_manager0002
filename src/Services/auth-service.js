@@ -5,7 +5,7 @@ const API_URL = "http://localhost:8080/api/";
 class AuthService {
     register(roleId, firstName, lastName, email, password) {
         return axios.post(API_URL + "users/register", {
-            roleId;
+            roleId,
             firstName,
             lastName,
             email,
