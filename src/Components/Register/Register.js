@@ -4,6 +4,8 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button"
 import isEmail from "validator/es/lib/isEmail";
 
+import AuthService from "../../Services/auth-service";
+
 const required = value => {
     if (!value) {
         return (
@@ -68,7 +70,33 @@ export default class Register extends Component {
         this.form.validateAll();
 
         if (this.checkBtn.context._errors.length === 0) {
-            console.log("Successful check")
+            AuthService.register(
+                parseInt(this.state.roleId),
+                this.state.firstName,
+                this.state.lastName,
+                this.state.email,
+                this.state.password
+            ).then (
+                response => {
+                    this.setState({
+                        message: response.data.message,
+                        successful: true
+                    });
+                },
+                error => {
+                    const errMessage = (
+                        error.response &&
+                            error.response.data &&
+                            error.response.data.message
+                    ) || error.message
+                    || error.toString();
+
+                    this.setState({
+                        successful: false,
+                        message: errMessage
+                    });
+                }
+            );
         }
     }
 
@@ -117,6 +145,7 @@ export default class Register extends Component {
                             this.form = c;
                         }}
                     >
+                        {!this.state.successful && (
                             <div className="container">
                                 <div className="form-group">
                                     <label htmlFor="roleId">Role ID:</label>
@@ -181,14 +210,27 @@ export default class Register extends Component {
                                 <div className="form-group">
                                     <button className="btn btn-primary btn-block">Register</button>
                                 </div>
-
-                                <CheckButton
-                                    style={{display: "none"}}
-                                    ref={c => {
-                                        this.checkBtn = c;
-                                    }}
-                                />
                             </div>
+                        )}
+
+                        {this.state.message && (
+                            <div className={
+                                this.state.successful
+                                    ? "alert alert-success"
+                                    : "alert alert-danger"
+                            }
+                                 role="alert"
+                            >
+                                {this.state.message}
+                            </div>
+                        )}
+
+                        <CheckButton
+                            style={{display: "none"}}
+                            ref={c => {
+                                this.checkBtn = c;
+                            }}
+                        />
                     </Form>
                 </div>
             </div>
