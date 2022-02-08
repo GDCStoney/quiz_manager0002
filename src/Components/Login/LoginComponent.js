@@ -67,9 +67,9 @@ export default class LoginComponent extends Component {
             AuthService.login(
                 this.state.email, this.state.password
             ).then (
-                response => {
-                    console.log(response);
-                    console.log(JSON.parse(sessionStorage.user));
+                () => {
+                    window.history.replaceState(this.state, 'logged in user', "/");
+                    window.location.reload();
                 },
                 error => {
                     const errMessage = (
