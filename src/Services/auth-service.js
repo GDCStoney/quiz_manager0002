@@ -12,6 +12,20 @@ class AuthService {
             password
         });
     }
+
+    login(email, password) {
+        return axios.post(API_URL + "users/login", {
+            email,
+            password
+        }).then (
+            response => {
+                if (response.data.token) {
+                    sessionStorage.setItem("user", JSON.stringify(response.data));
+                }
+                return response.data;
+            }
+        );
+    }
 }
 
 export default new AuthService();
