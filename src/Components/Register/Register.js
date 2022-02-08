@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button"
+import isEmail from "validator/es/lib/isEmail";
 
 const required = value => {
     if (!value) {
@@ -12,6 +13,26 @@ const required = value => {
         );
     }
 };
+
+const vEmail = value => {
+    if (!isEmail(value)) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This is not a valid email!
+            </div>
+        );
+    }
+};
+
+const vRoleId = value => {
+    if (1 > value || value > 3 ) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This is not a valid Role Identifier - please use 1, 2, or 3!
+            </div>
+        )
+    }
+}
 
 export default class Register extends Component {
     constructor(props) {
@@ -99,7 +120,7 @@ export default class Register extends Component {
                                     name="roleId"
                                     value={this.state.roleId}
                                     onChange={this.onChangeRoleId}
-                                    validations={[required]}
+                                    validations={[required, vRoleId]}
                                 />
                             </div>
 
@@ -135,7 +156,7 @@ export default class Register extends Component {
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.onChangeEmail}
-                                    validations={[required]}
+                                    validations={[required, vEmail]}
                                 />
                             </div>
 
