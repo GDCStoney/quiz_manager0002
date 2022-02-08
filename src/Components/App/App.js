@@ -13,6 +13,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.logOut = this.logOut.bind(this);
+
     this.state = {
       currentUser: undefined
     };
@@ -26,6 +28,10 @@ class App extends Component {
         currentUser: user
       });
     }
+  }
+
+  logOut() {
+    AuthService.logOut();
   }
 
   render() {
@@ -58,9 +64,9 @@ class App extends Component {
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to={"/"} className="nav-link">
-                        Logout
-                      </Link>
+                      <a href="/login" className="nav-link" onClick={this.logOut}>
+                        LogOut
+                      </a>
                     </li>
                   </div>
                 )
@@ -68,7 +74,7 @@ class App extends Component {
                   <div className="navbar-nav mt-auto">
                     <li className="nav-item">
                       <Link to={"/login"} className="nav-link">
-                        Login
+                        LogIn
                       </Link>
                     </li>
                     <li className="nav-item">
