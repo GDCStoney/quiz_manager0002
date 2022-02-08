@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
 import Home from "./Home/Home";
-import Register from "../Register/Register";
+import RegisterComponent from "../Register/RegisterComponent";
 
 class App extends Component {
   constructor(props) {
@@ -51,7 +51,7 @@ class App extends Component {
           <div className="container mt-3">
             <Routes>
               <Route exact path="/" element={<Home />} />
-              <Route exact path="/register" element={<Register />} />
+              <Route exact path="/register" element={<RegisterComponent />} />
             </Routes>
           </div>
         </div>

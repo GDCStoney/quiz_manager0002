@@ -36,7 +36,7 @@ const vRoleId = value => {
     }
 }
 
-export default class Register extends Component {
+export default class RegisterComponent extends Component {
     constructor(props) {
         super(props);
 
