@@ -68,7 +68,7 @@ export default class LoginComponent extends Component {
                 this.state.email, this.state.password
             ).then (
                 () => {
-                    window.history.replaceState(this.state, 'logged in user', "/");
+                    window.history.replaceState(this.state, 'logged in user', "/profile");
                     window.location.reload();
                 },
                 error => {
