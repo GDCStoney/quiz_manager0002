@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-
-import AuthService from "../../Services/auth-service";
-import Form from "react-validation/src/components/form";
-import Input from "react-validation/src/components/input";
-import Button from "react-validation/src/components/button";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button"
 
 const required = value => {
     if (!value) {
@@ -45,6 +43,12 @@ export default class Register extends Component {
             message: "",
             successful: false
         });
+
+        this.form.validateAll();
+
+        if (this.checkBtn.context._errors.length === 0) {
+            console.log("Successful check")
+        }
     }
 
     onChangeRoleId(e) {
@@ -86,73 +90,78 @@ export default class Register extends Component {
                         this.form = c;
                     }}
                 >
-                    <div className="container">
-                        <div className="form-group">
-                            <label htmlFor="roleId">Role ID:</label>
-                            <Input
-                                type="number"
-                                className="form-control"
-                                name="roleId"
-                                value={this.state.roleId}
-                                onChange={this.onChangeRoleId}
-                                validations={[required]}
+                        <div className="container">
+                            <div className="form-group">
+                                <label htmlFor="roleId">Role ID:</label>
+                                <Input
+                                    type="number"
+                                    className="form-control"
+                                    name="roleId"
+                                    value={this.state.roleId}
+                                    onChange={this.onChangeRoleId}
+                                    validations={[required]}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="firstName">First Name:</label>
+                                <Input
+                                    type="text"
+                                    className="form-control"
+                                    name="firstName"
+                                    value={this.state.firstName}
+                                    onChange={this.onChangeFirstName}
+                                    validations={[required]}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="lastName">Last Name:</label>
+                                <Input
+                                    type="text"
+                                    className="form-control"
+                                    name="lastName"
+                                    value={this.state.lastName}
+                                    onChange={this.onChangeLastName}
+                                    validations={[required]}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="email">Email (username):</label>
+                                <Input
+                                    type="text"
+                                    className="form-control"
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.onChangeEmail}
+                                    validations={[required]}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="password">Password:</label>
+                                <Input
+                                    type="password"
+                                    className="form-control"
+                                    name="password1"
+                                    value={this.state.password}
+                                    onChange={this.onChangePassword}
+                                    validations={[required]}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <button className="btn btn-primary btn-block">Register</button>
+                            </div>
+
+                            <CheckButton
+                                style={{display: "none"}}
+                                ref={c => {
+                                    this.checkBtn = c;
+                                }}
                             />
                         </div>
-
-                        <div className="form-group">
-                            <label htmlFor="firstName">First Name:</label>
-                            <Input
-                                type="text"
-                                className="form-control"
-                                name="firstName"
-                                value={this.state.firstName}
-                                onChange={this.onChangeFirstName}
-                                validations={[required]}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="lastName">Last Name:</label>
-                            <Input
-                                type="text"
-                                className="form-control"
-                                name="lastName"
-                                value={this.state.lastName}
-                                onChange={this.onChangeLastName}
-                                validations={[required]}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email">Email (username):</label>
-                            <Input
-                                type="text"
-                                className="form-control"
-                                name="email"
-                                value={this.state.email}
-                                onChange={this.onChangeEmail}
-                                validations={[required]}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password">Password:</label>
-                            <Input
-                                type="password"
-                                className="form-control"
-                                name="password1"
-                                value={this.state.password}
-                                onChange={this.onChangePassword}
-                                validations={[required]}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <Button className="btn btn-primary btn-block">Register</Button>
-                        </div>
-
-
-                    </div>
                 </Form>
             </div>
         );

@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
 import Home from "./Home/Home";
+import Register from "../Register/Register";
 
 class App extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class App extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/"} className="nav-link">
+                <Link to={"/register"} className="nav-link">
                   Register
                 </Link>
               </li>
@@ -50,6 +51,7 @@ class App extends Component {
           <div className="container mt-3">
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/register" element={<Register />} />
             </Routes>
           </div>
         </div>
