@@ -5,6 +5,7 @@ import './App.css';
 
 import Home from "./Home/Home";
 import RegisterComponent from "../Register/RegisterComponent";
+import LoginComponent from "../Login/LoginComponent";
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class App extends Component {
             </div>
             <div className="navbar-nav mt-auto">
               <li className="nav-item">
-                <Link to={"/"} className="nav-link">
+                <Link to={"/login"} className="nav-link">
                   Login
                 </Link>
               </li>
@@ -52,6 +53,7 @@ class App extends Component {
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/register" element={<RegisterComponent />} />
+              <Route exact path="/login" element={<LoginComponent />} />
             </Routes>
           </div>
         </div>
