@@ -49,11 +49,16 @@ class App extends Component {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Manage Quizzes
-                </Link>
-              </li>
+              {currentUser
+                  ? (
+                      <li className="nav-item">
+                        <Link to={"/"} className="nav-link">
+                          Manage Quizzes
+                        </Link>
+                      </li>
+                      )
+                  : (<></>)
+              }
             </div>
             {currentUser
               ? (
