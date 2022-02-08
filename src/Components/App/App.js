@@ -8,6 +8,7 @@ import Home from "./Home/Home";
 import RegisterComponent from "../Register/RegisterComponent";
 import LoginComponent from "../Login/LoginComponent";
 import ProfileComponent from "../Profile/ProfileComponent";
+import ManagerComponent from "../Manager/ManagerComponent";
 
 class App extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class App extends Component {
               {currentUser
                   ? (
                       <li className="nav-item">
-                        <Link to={"/"} className="nav-link">
+                        <Link to={"/manager"} className="nav-link">
                           Manage Quizzes
                         </Link>
                       </li>
@@ -99,6 +100,7 @@ class App extends Component {
               <Route exact path="/register" element={<RegisterComponent />} />
               <Route exact path="/login" element={<LoginComponent />} />
               <Route exact path="/profile" element={<ProfileComponent />} />
+              <Route exact path="/manager" element={<ManagerComponent />} />
             </Routes>
           </div>
         </div>
