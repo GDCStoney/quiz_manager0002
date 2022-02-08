@@ -60,6 +60,7 @@ class App extends Component {
                   : (<></>)
               }
             </div>
+
             {currentUser
               ? (
                   <div className="navbar-nav mt-auto">
