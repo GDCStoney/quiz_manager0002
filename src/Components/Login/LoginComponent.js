@@ -64,7 +64,7 @@ export default class LoginComponent extends Component {
         this.form.validateAll();
 
         if (this.checkBtn.context._errors.length === 0) {
-            AuthService.login(
+            AuthService.logIn(
                 this.state.email, this.state.password
             ).then (
                 () => {

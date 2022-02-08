@@ -13,7 +13,7 @@ class AuthService {
         });
     }
 
-    login(email, password) {
+    logIn(email, password) {
         return axios.post(API_URL + "users/login", {
             email,
             password
@@ -29,6 +29,10 @@ class AuthService {
 
     getCurrentUser() {
         return JSON.parse(sessionStorage.getItem("user"));
+    }
+
+    logOut() {
+        sessionStorage.removeItem("user");
     }
 }
 
