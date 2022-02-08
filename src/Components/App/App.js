@@ -6,6 +6,7 @@ import './App.css';
 import Home from "./Home/Home";
 import RegisterComponent from "../Register/RegisterComponent";
 import LoginComponent from "../Login/LoginComponent";
+import ProfileComponent from "../Profile/ProfileComponent";
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class App extends Component {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/register" element={<RegisterComponent />} />
               <Route exact path="/login" element={<LoginComponent />} />
+              <Route exact path="/profile" element={<ProfileComponent />} />
             </Routes>
           </div>
         </div>
