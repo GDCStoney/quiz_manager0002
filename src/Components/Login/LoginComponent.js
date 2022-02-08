@@ -64,7 +64,28 @@ export default class LoginComponent extends Component {
         this.form.validateAll();
 
         if (this.checkBtn.context._errors.length === 0) {
-            console.log("Login object successfully created");
+            AuthService.login(
+                this.state.email, this.state.password
+            ).then (
+                response => {
+                    console.log(response);
+                    console.log(JSON.parse(sessionStorage.user));
+                },
+                error => {
+                    const errMessage = (
+                        error.response &&
+                        error.response.data &&
+                        error.response.data.message
+                    ) ||
+                    error.message ||
+                    error.toString();
+
+                    this.setState({
+                        loading: false,
+                        message: errMessage
+                    });
+                }
+            );
         }
     }
 
