@@ -3,6 +3,7 @@ import {Link, Route, Routes} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
+import AuthService from "../../Services/auth-service";
 import Home from "./Home/Home";
 import RegisterComponent from "../Register/RegisterComponent";
 import LoginComponent from "../Login/LoginComponent";
@@ -13,11 +14,23 @@ class App extends Component {
     super(props);
 
     this.state = {
-      content: ""
+      currentUser: undefined
     };
   }
 
+  componentDidMount() {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        currentUser: user
+      });
+    }
+  }
+
   render() {
+    const {currentUser} = this.state;
+
     return (
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -36,18 +49,36 @@ class App extends Component {
                 </Link>
               </li>
             </div>
-            <div className="navbar-nav mt-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Register
-                </Link>
-              </li>
-            </div>
+            {currentUser
+              ? (
+                  <div className="navbar-nav mt-auto">
+                    <li className="nav-item">
+                      <Link to={"/profile"} className="nav-link">
+                        {currentUser.email}
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to={"/"} className="nav-link">
+                        Logout
+                      </Link>
+                    </li>
+                  </div>
+                )
+                : (
+                  <div className="navbar-nav mt-auto">
+                    <li className="nav-item">
+                      <Link to={"/login"} className="nav-link">
+                        Login
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to={"/register"} className="nav-link">
+                        Register
+                      </Link>
+                    </li>
+                  </div>
+                )
+            }
           </nav>
 
           <div className="container mt-3">
