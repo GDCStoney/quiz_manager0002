@@ -10,7 +10,7 @@ class QuizService {
     getQuizList() {
         return axios({
             method: 'get',
-            url: API_URL + 'quizzes',
+            url: API_URL,
             headers: authHeader()
             });
     }
