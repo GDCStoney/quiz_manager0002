@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import QuizList from "../App/Quizzes/QuizList";
 
 export default class ManagerComponent extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class ManagerComponent extends Component {
     render() {
         return (
             <div className="container">
-
+                <QuizList />
             </div>
         )
     }
