@@ -52,7 +52,6 @@ export default class QuizList extends Component {
     }
 
     onChangeQuizList(e) {
-        console.log(e);
         this.setState({
             selectedQuiz: e.value
         });
