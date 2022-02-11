@@ -81,7 +81,7 @@ export default class QuizList extends Component {
                         </div>
                     )}
                     {this.state.selectedQuiz && (
-                        <QuestionList selectedQuiz={this.state.selectedQuizId} />
+                        <QuestionList selectedQuizId={this.state.selectedQuizId} />
                     )}
 
                     {this.state.content && (
