@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Select from "react-select";
 
 import QuestionService from "../../../Services/question-service";
+import QResponseList from "../QResponses/QResponseList";
 
 export default class QuestionList extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export default class QuestionList extends Component {
     }
 
     componentDidMount() {
-        QuestionService.getQuestionList(this.props.selectedQuiz).then(
+        QuestionService.getQuestionList(this.props.selectedQuizId).then(
             response => {
                 this.setState({
                     questions: response.data
@@ -77,6 +78,13 @@ export default class QuestionList extends Component {
                         <div className="alert alert-danger" role="alert">
                             {this.state.content}
                         </div>
+                    )}
+
+                    {this.state.selectedQuestion && (
+                        <QResponseList
+                            selectedQuizId={this.props.selectedQuizId}
+                            selectedQuestionId={this.state.selectedQuestionId}
+                        />
                     )}
                 </div>
             </div>
