@@ -14,7 +14,6 @@ class QuizService {
             headers: authHeader()
             });
     }
-
 }
 
 export default new QuizService();

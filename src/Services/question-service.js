@@ -15,7 +15,6 @@ class QuestionService {
             headers: authHeader()
         });
     }
-
 }
 
 export default new QuestionService();
