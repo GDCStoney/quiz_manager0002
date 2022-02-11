@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Select from "react-select";
 
 import QuizService from "../../../Services/quiz-service";
+import QuestionList from "../Questions/QuestionList";
 
 export default class QuizList extends Component {
     constructor(props) {
@@ -13,7 +14,8 @@ export default class QuizList extends Component {
         this.state = {
             content: "",
             quizzes: "",
-            selectedQuiz: ""
+            selectedQuiz: "",
+            selectedQuizId: ""
         };
     }
 
@@ -44,7 +46,7 @@ export default class QuizList extends Component {
         quizzes.forEach(function(quiz) {
             quizOptions.push({
                 label: quiz.quizId + ": " + quiz.name,
-                value: quiz.quizId + ": " + quiz.name
+                value: quiz.quizId
             });
         });
 
@@ -53,7 +55,8 @@ export default class QuizList extends Component {
 
     onChangeQuizList(e) {
         this.setState({
-            selectedQuiz: e.value
+            selectedQuiz: e.label,
+            selectedQuizId: e.value
         });
     }
 
@@ -71,6 +74,9 @@ export default class QuizList extends Component {
                             onChange={this.onChangeQuizList}
                             value={{label: this.state.selectedQuiz}}
                         />
+                    )}
+                    {this.state.selectedQuiz && (
+                        <QuestionList selectedQuiz={this.state.selectedQuizId} />
                     )}
 
                     {this.state.content && (
