@@ -75,6 +75,11 @@ export default class QuizList extends Component {
                             value={{label: this.state.selectedQuiz}}
                         />
                     )}
+                    {this.state.content && (
+                        <div className="alert alert-danger" role="alert">
+                            {this.state.content}
+                        </div>
+                    )}
                     {this.state.selectedQuiz && (
                         <QuestionList selectedQuiz={this.state.selectedQuizId} />
                     )}

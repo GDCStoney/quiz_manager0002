@@ -73,6 +73,11 @@ export default class QuestionList extends Component {
                             value={{label: this.state.selectedQuestion}}
                         />
                     )}
+                    {this.state.content && (
+                        <div className="alert alert-danger" role="alert">
+                            {this.state.content}
+                        </div>
+                    )}
                 </div>
             </div>
         )
