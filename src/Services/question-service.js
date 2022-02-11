@@ -4,7 +4,7 @@ import authHeader from "./auth-header";
 
 
 const API_BASE_URL = "http://localhost:8080/api/quizzes/";
-const API_QUESTIONS_URL = '/questions'
+const API_QUESTIONS_URL = '/questions';
 
 class QuestionService {
 
