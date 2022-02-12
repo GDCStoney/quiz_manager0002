@@ -7,7 +7,7 @@ const API_URL = "http://localhost:8080/api/quizzes";
 
 class QuizService {
 
-    getQuizList() {
+    fetchQuizList() {
         return axios({
             method: 'get',
             url: API_URL,

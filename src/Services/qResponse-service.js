@@ -8,9 +8,7 @@ const API_QUESTIONS_URL = '/questions/';
 const API_QRESPONSES_URL = '/qresponses';
 
 class QResponseService {
-    getQResponseList(quizId, questionId) {
-        console.log(quizId);
-        console.log(questionId);
+    fetchQResponseList(quizId, questionId) {
         return axios({
             method: 'get',
             url: API_BASE_URL + quizId + API_QUESTIONS_URL + questionId + API_QRESPONSES_URL,
@@ -19,4 +17,4 @@ class QResponseService {
     }
 }
 
-export default new QResponseService;
+export default new QResponseService();

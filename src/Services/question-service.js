@@ -8,7 +8,7 @@ const API_QUESTIONS_URL = '/questions';
 
 class QuestionService {
 
-    getQuestionList(quizId) {
+    fetchQuestionList(quizId) {
         return axios({
             method: 'get',
             url: API_BASE_URL + quizId + API_QUESTIONS_URL,
