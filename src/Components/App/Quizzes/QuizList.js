@@ -162,6 +162,29 @@ export default class QuizList extends Component {
                         )}
                     </div>
                 </div>
+                {this.state.currentUser.roleId === "3" &&  (
+                    <div className="container-fluid mb-4">
+                        <button
+                            type="button"
+                            name="quizAdd"
+                            className="btn btn-lg btn-light m-1">
+                            <i className="bi-file-earmark-plus-fill"></i>
+                        </button>
+                        <button
+                            type="button"
+                            name="quizDelete"
+                            className="btn btn-lg btn-light m-1">
+                            <i className="bi-file-earmark-minus-fill"></i>
+                        </button>
+                        <button
+                            type="button"
+                            name="quizUpdate"
+                            className="btn btn-lg btn-light m-1">
+                            <i className="bi-gear-fill"></i>
+                        </button>
+                    </div>
+                )}
+
                 <div className="row">
                     <div>
                         <h3>A Question:</h3>
@@ -181,6 +204,29 @@ export default class QuizList extends Component {
                         </div>
                     </div>
                 </div>
+                {this.state.currentUser.roleId === "3" &&  (
+                    <div className="container-fluid mb-4">
+                        <button
+                            type="button"
+                            name="questionAdd"
+                            className="btn btn-lg btn-light m-1">
+                            <i className="bi-file-earmark-plus-fill"></i>
+                        </button>
+                        <button
+                            type="button"
+                            name="questionDelete"
+                            className="btn btn-lg btn-light m-1">
+                            <i className="bi-file-earmark-minus-fill"></i>
+                        </button>
+                        <button
+                            type="button"
+                            name="questionUpdate"
+                            className="btn btn-lg btn-light m-1">
+                            <i className="bi-gear-fill"></i>
+                        </button>
+                    </div>
+                )}
+
                 <div className="row">
                     <div>
                         {(this.state.currentUser.roleId === "3" && (
@@ -204,6 +250,28 @@ export default class QuizList extends Component {
                             )}
                         </div>
                     </div>
+                    {this.state.currentUser.roleId === "3" &&  (
+                        <div className="container-fluid">
+                            <button
+                                type="button"
+                                name="qresponseAdd"
+                                className="btn btn-lg btn-light m-1">
+                                <i className="bi-file-earmark-plus-fill"></i>
+                            </button>
+                            <button
+                                type="button"
+                                name="qresponseDelete"
+                                className="btn btn-lg btn-light m-1">
+                                <i className="bi-file-earmark-minus-fill"></i>
+                            </button>
+                            <button
+                                type="button"
+                                name={"qresponseUpdate"}
+                                className="btn btn-lg btn-light m-1">
+                                <i className="bi-gear-fill"></i>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         );
