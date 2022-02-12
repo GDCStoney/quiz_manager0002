@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Select from "react-select";
 
+import AuthService from "../../../Services/auth-service";
 import QuizService from "../../../Services/quiz-service";
 import QuestionService from "../../../Services/question-service";
 import QResponseService from "../../../Services/qResponse-service";
-import Select from "react-select";
 
 export default class QuizList extends Component {
     constructor(props) {
@@ -15,11 +16,14 @@ export default class QuizList extends Component {
         this.onChangeQResponseList = this.onChangeQResponseList.bind(this);
 
         this.state = {
+            currentUser: "",
             content: "",
             quizzes: [],
             selectedQuizId: "",
+            selectedQuiz: "",
             questions: [],
             selectedQuestionId: "",
+            selectedQuestion: "",
             qResponses: [],
             selectedQResponseId: "",
             selectedQResponse: "",
@@ -28,6 +32,10 @@ export default class QuizList extends Component {
 
     componentDidMount() {
         setTimeout(()=> {
+        this.setState({
+            currentUser: AuthService.getCurrentUser(),
+        })
+
         QuizService.fetchQuizList().then(
                 response => {
                     this.setState({
@@ -61,8 +69,10 @@ export default class QuizList extends Component {
         },200);
 
         this.setState({
-            selectedQuizId: e.target.value,
+            selectedQuizId: e.value,
+            selectedQuiz: e.label,
             selectedQuestionId: "",
+            selectedQuestion: "",
             selectedQResponseId: "",
             selectedQResponse: "",
             qResponses: [],
@@ -94,7 +104,8 @@ export default class QuizList extends Component {
         }, 200);
 
         this.setState({
-            selectedQuestionId: e.target.value,
+            selectedQuestionId: e.value,
+            selectedQuestion: e.label,
             selectedQResponseId: "",
             selectedQResponse: "",
         });
@@ -108,11 +119,21 @@ export default class QuizList extends Component {
         });
     }
 
-    mapOptions(qResponses) {
-        return (qResponses.map((element, key) => {
-            return (
-                new Object({value: element.qresponseId, label: element.responseText})
-            );
+    mapQuizOptions(collection) {
+        return(collection.map((element) => {
+            return {value: element.quizId, label: element.name};
+        }));
+    }
+
+    mapQuestionOptions(collection) {
+        return(collection.map((element) => {
+            return {value: element.questionId, label: element.questionText};
+        }));
+    }
+
+    mapQResponseOptions(collection) {
+        return (collection.map((element) => {
+            return {value: element.qresponseId, label: element.responseText};
         }));
     }
 
@@ -120,30 +141,20 @@ export default class QuizList extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-1"></div>
-                    <div className="col-md-10">
-                        <h3>Please select a quiz:</h3>
+                    <div className="col-md-12">
+                        <h3>Please select a Quiz:</h3>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col p-4">
                         {this.state.quizzes && (
-                            <select
+                            <Select
                                 className="form-control-lg"
                                 name="selectQuiz"
-                                value={this.state.selectedQuizId}
+                                value={{value: this.state.selectedQuizId, label: this.state.selectedQuiz}}
                                 onChange={this.onChangeQuizList}
-                            >
-                                <option value>Select a quiz</option>
-                                {this.state.quizzes.map((element, key) => {
-                                    return (
-                                        <option key={key} value={element.quizId}>
-                                            {element.quizId + ": " + element.name}
-                                        </option>
-                                    );
-
-                                })}
-                            </select>
+                                options={this.mapQuizOptions(this.state.quizzes)}
+                            />
                         )}
                         {this.state.content && (
                             <div className="alert alert-danger" role="alert">
@@ -153,42 +164,40 @@ export default class QuizList extends Component {
                     </div>
                 </div>
                 <div className="row">
+                    <div>
+                        <h3>A Question:</h3>
+                    </div>
                     <div className="col p-4">
                         {this.state.questions && (
-                            <select
+                            <Select
                                 className="form-control-lg"
                                 name="selectQuiz"
-                                value={this.state.selectedQuestionId}
+                                value={{value: this.state.selectedQuestionId, label: this.state.selectedQuestion}}
                                 onChange={this.onChangeQuestionList}
-                            >
-                                <option value>Select a question</option>
-                                {this.state.questions.map((element, key) => {
-                                    return (
-                                        <option key={key} value={element.questionId}>
-                                            {element.questionId + ": " + element.questionText}
-                                        </option>
-                                    );
-
-                                })}
-                            </select>
+                                options={this.mapQuestionOptions(this.state.questions)}
+                            />
                         )}
                     </div>
                 </div>
                 <div className="row">
+                    <div>
+                        {(this.state.currentUser.roleId == 3 && (
+                            <h3>... and a Response:</h3>
+                        )) || (
+                            <h4>The responses for the Question:</h4>
+                        )}
+                    </div>
                     <div className="col-md-12">
                         {this.state.qResponses && (
-                            <>
-                                <label htmlFor="selectQResponse">Selected Response:</label>
-                                <Select
-                                    className="form-select-lg"
-                                    name="selectQResponse"
-                                    value={{value: this.state.selectedQResponseId, label:this.state.selectedQResponse}}
-                                    label={this.state.selectedQResponseId}
-                                    onChange={this.onChangeQResponseList}
-                                    options={this.mapOptions(this.state.qResponses)}
-                                    menuIsOpen={this.state.qResponses.length !== 0}
-                                />
-                            </>
+                            <Select
+                                className="form-select-lg"
+                                name="selectQResponse"
+                                value={{value: this.state.selectedQResponseId, label:this.state.selectedQResponse}}
+                                label={this.state.selectedQResponseId}
+                                onChange={this.onChangeQResponseList}
+                                options={this.mapQResponseOptions(this.state.qResponses)}
+                                menuIsOpen={this.state.qResponses.length !== 0}
+                            />
                         )}
                     </div>
                 </div>
