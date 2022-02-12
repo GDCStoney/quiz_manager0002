@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Select from "react-select";
 
 import AuthService from "../../../Services/auth-service";
@@ -167,38 +166,43 @@ export default class QuizList extends Component {
                     <div>
                         <h3>A Question:</h3>
                     </div>
-                    <div className="col p-4">
-                        {this.state.questions && (
-                            <Select
-                                className="form-control-lg"
-                                name="selectQuiz"
-                                value={{value: this.state.selectedQuestionId, label: this.state.selectedQuestion}}
-                                onChange={this.onChangeQuestionList}
-                                options={this.mapQuestionOptions(this.state.questions)}
-                            />
-                        )}
+                    <div className="d-flex justify-content-center">
+                        <div className="select-container">
+                            {this.state.questions && (
+                                <Select
+                                    className="form-control-lg"
+                                    name="selectQuiz"
+                                    value={{value: this.state.selectedQuestionId, label: this.state.selectedQuestion}}
+                                    onChange={this.onChangeQuestionList}
+                                    options={this.mapQuestionOptions(this.state.questions)}
+                                    menuIsOpen={this.state.selectedQuiz.length !== 0}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="row">
                     <div>
-                        {(this.state.currentUser.roleId == 3 && (
+                        {(this.state.currentUser.roleId === "3" && (
                             <h3>... and a Response:</h3>
                         )) || (
-                            <h4>The responses for the Question:</h4>
+                            <h4>These are the available responses for the Question:</h4>
                         )}
                     </div>
-                    <div className="col-md-12">
-                        {this.state.qResponses && (
-                            <Select
-                                className="form-select-lg"
-                                name="selectQResponse"
-                                value={{value: this.state.selectedQResponseId, label:this.state.selectedQResponse}}
-                                label={this.state.selectedQResponseId}
-                                onChange={this.onChangeQResponseList}
-                                options={this.mapQResponseOptions(this.state.qResponses)}
-                                menuIsOpen={this.state.qResponses.length !== 0}
-                            />
-                        )}
+                    <div className="d-flex justify-content-center">
+                        <div className="select-container">
+                            {this.state.qResponses && (
+                                <Select
+                                    className="form-control-lg"
+                                    name="selectQResponse"
+                                    value={{value: this.state.selectedQResponseId, label:this.state.selectedQResponse}}
+                                    label={this.state.selectedQResponseId}
+                                    onChange={this.onChangeQResponseList}
+                                    options={this.mapQResponseOptions(this.state.qResponses)}
+                                    menuIsOpen={this.state.qResponses.length !== 0}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
