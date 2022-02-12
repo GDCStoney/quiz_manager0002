@@ -14,6 +14,32 @@ class QuizService {
             headers: authHeader()
             });
     }
+
+    addQuiz(quiz) {
+        return axios({
+            method: 'post',
+            url: API_URL,
+            data: { name: quiz.name, description: quiz.description },
+            headers: authHeader()
+        });
+    }
+
+    updateQuiz(quiz) {
+        return axios({
+            method: 'put',
+            url: API_URL + "/" + quiz.quizId,
+            data: { name: quiz.name, description: quiz.description },
+            headers: authHeader()
+        });
+    }
+
+    deleteQuiz(quiz) {
+        return axios({
+            method: 'delete',
+            url: API_URL + "/" + quiz.quizId,
+            headers: authHeader()
+        });
+    }
 }
 
 export default new QuizService();
