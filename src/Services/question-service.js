@@ -15,6 +15,32 @@ class QuestionService {
             headers: authHeader()
         });
     }
+
+    addQuestion(question) {
+        return axios({
+            method: 'post',
+            url: API_BASE_URL + question.quizId + API_QUESTIONS_URL,
+            data: { questionText: question.questionText },
+            headers: authHeader()
+        });
+    }
+
+    updateQuestion(question) {
+        return axios({
+            method: 'put',
+            url: API_BASE_URL + question.quizId + API_QUESTIONS_URL + "/" + question.questionId,
+            data: { questionText: question.questionText },
+            headers: authHeader()
+        });
+    }
+
+    deleteQuestion(question) {
+        return axios({
+            method: 'delete',
+            url: API_BASE_URL + question.quizId + API_QUESTIONS_URL + "/" + question.questionId,
+            headers: authHeader()
+        });
+    }
 }
 
 export default new QuestionService();
