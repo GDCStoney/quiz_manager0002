@@ -19,7 +19,7 @@ class QResponseService {
     addQResponse(qResponse) {
         return axios({
             method: 'post',
-            url: API_BASE_URL + question.quizId + API_QUESTIONS_URL + qResponse.questionId + API_QRESPONSES_URL,
+            url: API_BASE_URL + qResponse.quizId + API_QUESTIONS_URL + qResponse.questionId + API_QRESPONSES_URL,
             data: { responseText: qResponse.responseText, correctAnswer: qResponse.correctAnswer },
             headers: authHeader()
         });
