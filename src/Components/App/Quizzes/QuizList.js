@@ -5,6 +5,7 @@ import AuthService from "../../../Services/auth-service";
 import QuizService from "../../../Services/quiz-service";
 import QuestionService from "../../../Services/question-service";
 import QResponseService from "../../../Services/qResponse-service";
+import ReactTooltip from "react-tooltip";
 
 export default class QuizList extends Component {
     constructor(props) {
@@ -164,24 +165,39 @@ export default class QuizList extends Component {
                 </div>
                 {this.state.currentUser.roleId === "3" &&  (
                     <div className="container-fluid mb-4">
-                        <button
-                            type="button"
-                            name="quizAdd"
-                            className="btn btn-lg btn-light m-1">
-                            <i className="bi-file-earmark-plus-fill"></i>
-                        </button>
-                        <button
-                            type="button"
-                            name="quizDelete"
-                            className="btn btn-lg btn-light m-1">
-                            <i className="bi-file-earmark-minus-fill"></i>
-                        </button>
-                        <button
-                            type="button"
-                            name="quizUpdate"
-                            className="btn btn-lg btn-light m-1">
-                            <i className="bi-gear-fill"></i>
-                        </button>
+                        <>
+                            <ReactTooltip id="quizAddTip" place="bottom" effect="float">Add Quiz</ReactTooltip>
+                            <button
+                                type="button"
+                                name="quizAdd"
+                                className="btn btn-lg btn-light m-1"
+                                data-tip data-for="quizAddTip"
+                            >
+                                <i className="bi-file-earmark-plus-fill"></i>
+                            </button>
+                            {this.state.selectedQuizId && (
+                                <>
+                                    <ReactTooltip id="quizDeleteTip" place="bottom" effect="float">Delete Quiz</ReactTooltip>
+                                    <button
+                                        type="button"
+                                        name="quizDelete"
+                                        className="btn btn-lg btn-light m-1"
+                                        data-tip data-for="quizDeleteTip"
+                                    >
+                                        <i className="bi-file-earmark-minus-fill"></i>
+                                    </button>
+                                    <ReactTooltip id="quizUpdateTip" place="bottom" effect="float">Update Quiz</ReactTooltip>
+                                    <button
+                                        type="button"
+                                        name="quizUpdate"
+                                        className="btn btn-lg btn-light m-1"
+                                        data-tip data-for="quizUpdateTip"
+                                    >
+                                        <i className="bi-gear-fill"></i>
+                                    </button>
+                                </>
+                            )}
+                        </>
                     </div>
                 )}
 
@@ -204,26 +220,41 @@ export default class QuizList extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.currentUser.roleId === "3" &&  (
+                {this.state.currentUser.roleId === "3" &&  this.state.selectedQuizId && (
                     <div className="container-fluid mb-4">
-                        <button
-                            type="button"
-                            name="questionAdd"
-                            className="btn btn-lg btn-light m-1">
-                            <i className="bi-file-earmark-plus-fill"></i>
-                        </button>
-                        <button
-                            type="button"
-                            name="questionDelete"
-                            className="btn btn-lg btn-light m-1">
-                            <i className="bi-file-earmark-minus-fill"></i>
-                        </button>
-                        <button
-                            type="button"
-                            name="questionUpdate"
-                            className="btn btn-lg btn-light m-1">
-                            <i className="bi-gear-fill"></i>
-                        </button>
+                        <>
+                            <ReactTooltip id="questionAddTip" place="bottom" effect="float">Add Question</ReactTooltip>
+                            <button
+                                type="button"
+                                name="questionAdd"
+                                className="btn btn-lg btn-light m-1"
+                                data-tip data-for="questionAddTip"
+                            >
+                                <i className="bi-file-earmark-plus-fill"></i>
+                            </button>
+                            {this.state.selectedQuestionId && (
+                                <>
+                                    <ReactTooltip id="questionDeleteTip" place="bottom" effect="float">Delete Question</ReactTooltip>
+                                    <button
+                                        type="button"
+                                        name="questionDelete"
+                                        className="btn btn-lg btn-light m-1"
+                                        data-tip data-for="questionDeleteTip"
+                                    >
+                                        <i className="bi-file-earmark-minus-fill"></i>
+                                    </button>
+                                    <ReactTooltip id="questionUpdateTip" place="bottom" effect="float">Update Question</ReactTooltip>
+                                    <button
+                                        type="button"
+                                        name="questionUpdate"
+                                        className="btn btn-lg btn-light m-1"
+                                        data-tip data-for="questionUpdateTip"
+                                    >
+                                        <i className="bi-gear-fill"></i>
+                                    </button>
+                                </>
+                            )}
+                        </>
                     </div>
                 )}
 
@@ -250,26 +281,41 @@ export default class QuizList extends Component {
                             )}
                         </div>
                     </div>
-                    {this.state.currentUser.roleId === "3" &&  (
+                    {this.state.currentUser.roleId === "3" &&  this.state.selectedQuizId && this.state.selectedQuestionId && (
                         <div className="container-fluid">
-                            <button
-                                type="button"
-                                name="qresponseAdd"
-                                className="btn btn-lg btn-light m-1">
-                                <i className="bi-file-earmark-plus-fill"></i>
-                            </button>
-                            <button
-                                type="button"
-                                name="qresponseDelete"
-                                className="btn btn-lg btn-light m-1">
-                                <i className="bi-file-earmark-minus-fill"></i>
-                            </button>
-                            <button
-                                type="button"
-                                name={"qresponseUpdate"}
-                                className="btn btn-lg btn-light m-1">
-                                <i className="bi-gear-fill"></i>
-                            </button>
+                            <>
+                                <ReactTooltip id="qResponseAddTip" place="bottom" effect="float">Add Response</ReactTooltip>
+                                <button
+                                    type="button"
+                                    name="qResponseAdd"
+                                    className="btn btn-lg btn-light m-1"
+                                    data-tip data-for="qResponseAddTip"
+                                >
+                                    <i className="bi-file-earmark-plus-fill"></i>
+                                </button>
+                                {this.state.selectedQResponseId && (
+                                    <>
+                                        <ReactTooltip id="qResponseDeleteTip" place="bottom" effect="float">Delete Response</ReactTooltip>
+                                        <button
+                                            type="button"
+                                            name="qResponseDelete"
+                                            className="btn btn-lg btn-light m-1"
+                                            data-tip data-for="qResponseDeleteTip"
+                                        >
+                                            <i className="bi-file-earmark-minus-fill"></i>
+                                        </button>
+                                        <ReactTooltip id="qResponseUpdateTip" place="bottom" effect="float">Update Response</ReactTooltip>
+                                        <button
+                                            type="button"
+                                            name="qResponseUpdate"
+                                            className="btn btn-lg btn-light m-1"
+                                            data-tip data-for="qResponseUpdateTip"
+                                        >
+                                            <i className="bi-gear-fill"></i>
+                                        </button>
+                                    </>
+                                )}
+                            </>
                         </div>
                     )}
                 </div>
