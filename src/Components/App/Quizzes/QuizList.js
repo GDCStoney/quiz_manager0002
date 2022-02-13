@@ -6,17 +6,24 @@ import QuizService from "../../../Services/quiz-service";
 import QuestionService from "../../../Services/question-service";
 import QResponseService from "../../../Services/qResponse-service";
 import ReactTooltip from "react-tooltip";
+import QResponseForm from "../QResponses/QResponseForm";
 
 export default class QuizList extends Component {
     constructor(props) {
         super(props);
 
+        this.getQResponseList = this.getQResponseList.bind(this);
+
         this.onChangeQuizList = this.onChangeQuizList.bind(this);
         this.onChangeQuestionList = this.onChangeQuestionList.bind(this);
         this.onChangeQResponseList = this.onChangeQResponseList.bind(this);
 
+        this.onClickQResponseAdd = this.onClickQResponseAdd.bind(this);
+        this.handleQResponseFormSubmit = this.handleQResponseFormSubmit.bind(this);
+
         this.state = {
             currentUser: "",
+            activityState: "",
             content: "",
             quizzes: [],
             selectedQuizId: "",
@@ -89,7 +96,7 @@ export default class QuizList extends Component {
         });
     }
 
-    onChangeQuestionList(e) {
+    getQResponseList(selection) {
         setTimeout(() => {
             QResponseService.fetchQResponseList(
                 this.state.selectedQuizId,
@@ -98,12 +105,20 @@ export default class QuizList extends Component {
                 response => {
                     this.setState({
                         qResponses: response.data,
-                    })
-                },
+                    });
+
+                    if (selection) {
+                        this.setState({
+                            selectedQResponseId: selection.qResponseId,
+                            selectedQResponse: selection.responseText,
+                        });
+                    }
+                }
+                ,
                 error => {
                     this.setState({
                         content: (
-                            error.response &&
+                                error.response &&
                                 error.response.data &&
                                 error.response.data.message) ||
                             error.message ||
@@ -111,7 +126,11 @@ export default class QuizList extends Component {
                     });
                 }
             );
-        }, 200);
+        }, 1000);
+    }
+
+    onChangeQuestionList(e) {
+        this.getQResponseList();
 
         this.setState({
             selectedQuestionId: e.value,
@@ -119,13 +138,26 @@ export default class QuizList extends Component {
             selectedQResponseId: "",
             selectedQResponse: "",
         });
+    }
 
+    handleQResponseFormSubmit(response) {
+        this.setState({
+            activityState: "",
+
+        });
+        this.getQResponseList(response);
     }
 
     onChangeQResponseList(e) {
         this.setState({
             selectedQResponseId: e.value,
             selectedQResponse: e.label,
+        });
+    }
+
+    onClickQResponseAdd(e) {
+        this.setState({
+            activityState: "addQResponse",
         });
     }
 
@@ -171,6 +203,7 @@ export default class QuizList extends Component {
                             <Select
                                 className="form-control-lg"
                                 name="selectQuiz"
+                                isDisabled={this.state.activityState}
                                 value={{value: this.state.selectedQuizId, label: this.state.selectedQuiz}}
                                 onChange={this.onChangeQuizList}
                                 options={this.mapQuizOptions(this.state.quizzes)}
@@ -190,6 +223,7 @@ export default class QuizList extends Component {
                             <button
                                 type="button"
                                 name="quizAdd"
+                                disabled={this.state.activityState}
                                 className="btn btn-lg btn-light m-1"
                                 data-tip data-for="quizAddTip"
                             >
@@ -201,6 +235,7 @@ export default class QuizList extends Component {
                                     <button
                                         type="button"
                                         name="quizDelete"
+                                        disabled={this.state.activityState}
                                         className="btn btn-lg btn-light m-1"
                                         data-tip data-for="quizDeleteTip"
                                     >
@@ -210,6 +245,7 @@ export default class QuizList extends Component {
                                     <button
                                         type="button"
                                         name="quizUpdate"
+                                        disabled={this.state.activityState}
                                         className="btn btn-lg btn-light m-1"
                                         data-tip data-for="quizUpdateTip"
                                     >
@@ -231,6 +267,7 @@ export default class QuizList extends Component {
                                 <Select
                                     className="form-control-lg"
                                     name="selectQuiz"
+                                    isDisabled={this.state.activityState}
                                     value={{value: this.state.selectedQuestionId, label: this.state.selectedQuestion}}
                                     onChange={this.onChangeQuestionList}
                                     options={this.mapQuestionOptions(this.state.questions)}
@@ -247,6 +284,7 @@ export default class QuizList extends Component {
                             <button
                                 type="button"
                                 name="questionAdd"
+                                disabled={this.state.activityState}
                                 className="btn btn-lg btn-light m-1"
                                 data-tip data-for="questionAddTip"
                             >
@@ -258,6 +296,7 @@ export default class QuizList extends Component {
                                     <button
                                         type="button"
                                         name="questionDelete"
+                                        disabled={this.state.activityState}
                                         className="btn btn-lg btn-light m-1"
                                         data-tip data-for="questionDeleteTip"
                                     >
@@ -267,6 +306,7 @@ export default class QuizList extends Component {
                                     <button
                                         type="button"
                                         name="questionUpdate"
+                                        disabled={this.state.activityState}
                                         className="btn btn-lg btn-light m-1"
                                         data-tip data-for="questionUpdateTip"
                                     >
@@ -292,6 +332,7 @@ export default class QuizList extends Component {
                                 <Select
                                     className="form-control-lg"
                                     name="selectQResponse"
+                                    isDisabled={this.state.activityState}
                                     value={{value: this.state.selectedQResponseId, label:this.state.selectedQResponse}}
                                     onChange={this.onChangeQResponseList}
                                     options={this.mapQResponseOptions(this.state.qResponses)}
@@ -307,8 +348,10 @@ export default class QuizList extends Component {
                                 <button
                                     type="button"
                                     name="qResponseAdd"
+                                    disabled={this.state.activityState}
                                     className="btn btn-lg btn-light m-1"
                                     data-tip data-for="qResponseAddTip"
+                                    onClick={this.onClickQResponseAdd}
                                 >
                                     <i className="bi-file-earmark-plus-fill"></i>
                                 </button>
@@ -318,6 +361,7 @@ export default class QuizList extends Component {
                                         <button
                                             type="button"
                                             name="qResponseDelete"
+                                            disabled={this.state.activityState}
                                             className="btn btn-lg btn-light m-1"
                                             data-tip data-for="qResponseDeleteTip"
                                         >
@@ -327,12 +371,21 @@ export default class QuizList extends Component {
                                         <button
                                             type="button"
                                             name="qResponseUpdate"
+                                            disabled={this.state.activityState}
                                             className="btn btn-lg btn-light m-1"
                                             data-tip data-for="qResponseUpdateTip"
                                         >
                                             <i className="bi-gear-fill"></i>
                                         </button>
                                     </>
+                                )}
+                                {(this.state.activityState === "addQResponse" || this.state.activityState === "updateAResponse") && (
+                                    <QResponseForm
+                                        quizId={this.state.selectedQuizId}
+                                        questionId={this.state.selectedQuestionId}
+                                        activityState={this.state.activityState}
+                                        onSubmit={this.handleQResponseFormSubmit}
+                                    />
                                 )}
                             </>
                         </div>
