@@ -32,17 +32,27 @@ export default class QuizList extends Component {
 
     componentDidMount() {
         setTimeout(()=> {
-        this.setState({
-            currentUser: AuthService.getCurrentUser(),
-        })
+            this.setState({
+                currentUser: AuthService.getCurrentUser(),
+            })
 
-        QuizService.fetchQuizList().then(
-                response => {
-                    this.setState({
-                        quizzes: response.data,
-                    });
-                }
-                );
+            QuizService.fetchQuizList().then(
+                    response => {
+                        this.setState({
+                            quizzes: response.data,
+                        });
+                    },
+                    error => {
+                        this.setState({
+                            content: (
+                                    error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString()
+                        });
+                    }
+            );
         }, 0);
     }
 
@@ -132,9 +142,19 @@ export default class QuizList extends Component {
     }
 
     mapQResponseOptions(collection) {
-        return (collection.map((element) => {
-            return {value: element.qresponseId, label: element.responseText};
-        }));
+        let responseLabels = [];
+        if (this.state.currentUser.roleId === "2" || this.state.currentUser.roleId === "3") {
+            responseLabels = collection.map(element => {
+                const newLabel = element.correctAnswer + ": " + element.responseText;
+                return {value: element.qresponseId, label: newLabel};
+            });
+        }else {
+            responseLabels = collection.map(element => {
+                const newLabel = element.responseText;
+                return {value: element.qresponseId, label: newLabel};
+            });
+        }
+        return responseLabels;
     }
 
     render() {
@@ -273,7 +293,6 @@ export default class QuizList extends Component {
                                     className="form-control-lg"
                                     name="selectQResponse"
                                     value={{value: this.state.selectedQResponseId, label:this.state.selectedQResponse}}
-                                    label={this.state.selectedQResponseId}
                                     onChange={this.onChangeQResponseList}
                                     options={this.mapQResponseOptions(this.state.qResponses)}
                                     menuIsOpen={this.state.qResponses.length !== 0}
